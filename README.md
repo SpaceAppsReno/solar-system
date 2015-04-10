@@ -20,7 +20,7 @@ The game Ingress works by "placing" portals at various fixed (though user submit
 
 ### Geocaching
 
-I am honestly not sure how this would work, but several people have suggested it. If you are interested, please elaborate.
+A beacon on each solar system member interacts with the mobile app, registering visitors who get close enough.  At the same time, the app taps data gathered during NASA’s space explorations to deliver the appropriate educational material.  The tool can be deployed in any region as a game, with an award going to the first person to travel through our entire solar system and visit all its major participants.
 
 ### Educational Content
 
