@@ -1,31 +1,31 @@
 # Solar System in My City
 
-The core idea to this challenge is to build a scale model of the solar system in Reno. This will involve at least some sort of software application.
+The core idea to this project is to build a scale model of the solar system in Reno. The dome Fleischmann Planetarium is painted to look like the Sun and, when use for scale, would result in a solar system approximately 40mi across. We plan to show the planets in our space with their relative positions in real time, allowing virtual and augmented reality interaction. There will also be a geocaching game for user to play using their phones.
 
 ## The Scale
 
-The originating idea of this challenge was the size of the Flieschman Planetarium Dome, which is just under 10 meters and is painted to look like the Sun. At this scale, the Earth is approximately 3.5 inches in diameter and is .65 miles from the planetarium. More details (and exact numbers) on the scale can found on the [scaling project](https://github.com/SpaceAppsReno/solar-system/blob/master/scaling/README.md).
+The originating idea of this challenge was the size of the Fleischmann Planetarium Dome, which is just under 10 meters and is painted to look like the Sun. At this scale, the Earth is approximately 3.5 inches in diameter and is .65 miles from the planetarium. More details (and exact numbers) on the scale can found on the [scaling project](https://github.com/SpaceAppsReno/solar-system/blob/master/scaling/README.md).
 
-## Ideas
+## Project Features
 
-Quite a few ideas have been put forward regarding possible projects in this realm. Though all of it will be united under the same challenge, multiple projects could be pursued, integrating them with eachother or not. My understanding of the ideas is presented below. Please feel free to expand on these or add more.
+### Real Time Positions
 
-### Real World Models
-
-One possibility would be to build scale models of the objects and place them around town. Perhaps a host-a-planet program for local non-profits and/or businesses? Ideally, those would be placed somewhere on the orbit of the planet in our scale model.
-
-### Ingress Style
-
-The game Ingress works by "placing" portals at various fixed (though user submitted) locations around the world. Each portal can be attacked and claimed by a player's faction (there are two factions). Portals can be hacked, attacked, etc. Analogues to these actions could be drawn for our application, where the planets and other astronomical objects are the portals (possibly moving in real time).
-
-### Geocaching
-
-A beacon on each solar system member interacts with the mobile app, registering visitors who get close enough.  At the same time, the app taps data gathered during NASA’s space explorations to deliver the appropriate educational material.  The tool can be deployed in any region as a game, with an award going to the first person to travel through our entire solar system and visit all its major participants.
-
-### Educational Content
-
-Educational content (most easily from Wikipedia) could be presnted about each object, though I think it is important for the project to remain engaging and have re-play value.
+One part of our team is working an producing an api to determine the locations of astronomical objects in real time. This will be the core data source for the rest of the project.
 
 ### Augmented Reality
 
-This may go hand-in-hand with the Real World Models and/or Ingress, or be standalone. The idea here would be to be able to raise your phone and point it at location, and see the 3d model of the object overlayed with the camera's view of the world. This would allow the addition of things that aren't practical to build, such as the asteroid belt.
+Another part of the team is creating an augmented reality app. Users with the app on their phone will be able to see their location in the scaled Solar System based on their location in the city. When the user is near a beacon, it will display the objects's stats, model, etc. The user can walk around and view the objects in augmented reality. This may be expanded to give the option to view the planets and other astronomical objects in the system, seeing how things change based on user controlled position or gps.
+
+## Potential Additions
+
+### Real World Models
+
+One possible addition would be to build scale models of the objects and place them around town, likely as a host-a-planet program for local non-profits and/or businesses. These models would be beacon enabled for the Augmented Reality app and would be placed somewhere on the orbit of the planet in our scale model.
+
+### Geocaching
+
+This would be an extension of the Augmented Reality App, allowing users to track their path through the system and check in at the locations, creating an augmented reality scavenger hunt.
+
+### Planetary Defence
+
+A game which allows users to form teams and attack planets, claiming them and putting up planetary defences to discourage other attackers. Resources for attacking and building could be obtained through mining asteroids, solar energy collection, hijacking freight ships, etc.
