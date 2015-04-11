@@ -1,6 +1,6 @@
 # Solar System in My City
 
-The core idea to this project is to build a scale model of the solar system in Reno. The dome Fleischmann Planetarium is painted to look like the Sun and, when use for scale, would result in a solar system approximately 40mi across. We plan to show the planets in our space with their relative positions in real time, allowing virtual and augmented reality interaction. There will also be a geocaching game for user to play using their phones.
+The core idea of this project is to build a scale model of the solar system in Reno. The dome of the Fleischmann Planetarium is painted to look like the Sun and, when used for scale, would result in a solar system approximately 40mi across. We plan to show the planets in our space with their relative positions in real time, allowing virtual and augmented reality interaction. There will also be a geocaching game for users to play using their phones.
 
 ## The Scale
 
@@ -10,7 +10,7 @@ The originating idea of this challenge was the size of the Fleischmann Planetari
 
 ### Real Time Positions
 
-One part of our team is working an producing an api to determine the locations of astronomical objects in real time. This will be the core data source for the rest of the project.
+One part of our team is working an producing an API to determine the locations of astronomical objects in real time. This will be the core data source for the rest of the project.
 
 ### Augmented Reality
 
