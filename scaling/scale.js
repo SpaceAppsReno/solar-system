@@ -9,7 +9,7 @@ console.log('Speed of Light:', 671000000 * scale, 'mph')
 console.log('Speed of Light:', 300000000 * scale, 'm/s')
 console.log('')
 
-var planets = {
+var objects = {
 	Mercury: {
 		diameter: 3032,
 		distance: 35983610,
@@ -44,10 +44,10 @@ var planets = {
 	},
 }
 
-for(var planet in planets) {
+for(var planet in objects) {
 	console.log(planet)
 	
-	planet = planets[planet];
+	planet = objects[planet];
 	
 	console.log('  Diameter:', planet.diameter * scale * 1609.34, 'm')
 	console.log('  Diameter:', planet.diameter * scale * 160934 / 2.54, 'in')

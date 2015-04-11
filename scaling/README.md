@@ -2,6 +2,14 @@
 
 Based on the dome diameter of 9.8m and the Sun diameter of 1,392,684,000m, the scale would be approx 1m:142,110,612m.
 
+## Spreadsheet
+
+There is a spreadsheet of the planet distances as calculated by Dan Ruby. Wikipedia is likely the best source for planet data since it's updated by researchers from NASA/ESA/etc.
+
+This is the tool I used to figure out what landmarks were within the min/max radius rings from the planetarium: http://www.acscdg.com  I don't think that's helpful, but maybe some kind of piggybacking check in so crowd users can let everyone know what other businesses/schools/etc populate the orbits?
+
+NASA's aggregate Solar System site is: https://solarsystem.nasa.gov 
+
 ## Calcualting
 
 I prepared a nodejs script which has the sun and dome sizes and calcualtes the various real world values. Their approximate values are shown below. If needed, other related values could be calculated (such as mass, by keeping the same average density; etc).
