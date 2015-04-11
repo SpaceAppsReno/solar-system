@@ -1,4 +1,4 @@
-# Solar System in My City
+# Biggest Little Solar System
 
 The core idea to this project is to build a scale model of the solar system in Reno, NV. The dome Fleischmann Planetarium at the University of Nevada, Reno is painted to look like the Sun and, when use for scale, would result in a solar system approximately 40mi across. We plan to show the planets in our space with their relative positions in real time, allowing virtual and augmented reality interaction. There will also be a geocaching game for user to play using their phones.
 
