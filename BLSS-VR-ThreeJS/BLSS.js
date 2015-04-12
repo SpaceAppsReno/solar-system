@@ -48,7 +48,7 @@ var starSphere	= THREEx.Planets.createStarfield();
 scene.add(starSphere);
 
 //////////////////////////////////////////////////////////////////////////////////
-//		comment								//
+//		Change Settings and update models           							//
 //////////////////////////////////////////////////////////////////////////////////
 
 var currentMesh	= null;
@@ -57,6 +57,45 @@ var currentRotation = earthDefaultRotation;
 var cloud = null;
 var ring = null;
 var deviceOrientation = true;
+var PlanetRotation = true;
+function PlanetRotationSetting()
+{
+    PlanetRotation = !PlanetRotation;
+    if (PlanetRotation == false)
+    {
+        earthDefaultRotation = 0;
+        updateCurrentRotation(initialType);
+    }
+    else{
+        earthDefaultRotation = .004;
+        updateCurrentRotation(initialType);
+    }
+}
+function updateCurrentRotation(type){
+    if( type === 'Sun' ){
+
+        currentRotation = earthDefaultRotation / 26;
+    }else if( type === 'Mercury' ){
+
+        currentRotation = earthDefaultRotation / 58.625;
+    }else if( type === 'Venus' ){
+        currentRotation = (earthDefaultRotation / 116.75) * -1;
+    }else if( type === 'Moon' ){
+        currentRotation = earthDefaultRotation / 28;
+    }else if( type === 'Earth' ){
+        currentRotation = earthDefaultRotation;
+    }else if( type === 'Mars' ){
+        currentRotation = earthDefaultRotation * 1.0277777;
+    }else if( type === 'Jupiter' ){
+        currentRotation = earthDefaultRotation / 0.4166666;
+    }else if( type === 'Saturn' ){
+        currentRotation = earthDefaultRotation / 0.4441666;
+    }else if( type === 'Uranus' ){
+        currentRotation = earthDefaultRotation / 0.71875;
+    }else if( type === 'Neptune' ){
+        currentRotation = earthDefaultRotation / 0.666666;
+    }else	console.assert(false);
+}
 function DeviceOrientationSetting()
 {
     deviceOrientation = !deviceOrientation;
@@ -70,31 +109,23 @@ function switchValue(type){
     if( type === 'Sun' ){
         var mesh	= THREEx.Planets.createSun();
         mesh.name = "Sun";
-            currentRotation = earthDefaultRotation / 26;
     }else if( type === 'Mercury' ){
         var mesh	= THREEx.Planets.createMercury();
         mesh.name = 'Mercury';
-        currentRotation = earthDefaultRotation / 58.625;
     }else if( type === 'Venus' ){
         var mesh	= THREEx.Planets.createVenus();
-        currentRotation = (earthDefaultRotation / 116.75) * -1;
     }else if( type === 'Moon' ){
         var mesh	= THREEx.Planets.createMoon();
-        currentRotation = earthDefaultRotation / 28;
     }else if( type === 'Earth' ){
         var mesh	= THREEx.Planets.createEarth();
-        currentRotation = earthDefaultRotation;
         cloud	= THREEx.Planets.createEarthCloud();
         mesh.add(cloud)
     }else if( type === 'Mars' ){
         var mesh	= THREEx.Planets.createMars();
-        currentRotation = earthDefaultRotation * 1.0277777;
     }else if( type === 'Jupiter' ){
         var mesh	= THREEx.Planets.createJupiter();
-        currentRotation = earthDefaultRotation / 0.4166666;
     }else if( type === 'Saturn' ){
         var mesh	= THREEx.Planets.createSaturn();
-        currentRotation = earthDefaultRotation / 0.4441666;
         mesh.receiveShadow	= true;
         mesh.castShadow		= true;
         scene.add(spotlight);
@@ -105,7 +136,6 @@ function switchValue(type){
         scene.add(ring);
     }else if( type === 'Uranus' ){
         var mesh	= THREEx.Planets.createUranus();
-        currentRotation = earthDefaultRotation / 0.71875;
         mesh.receiveShadow	= true;
         mesh.castShadow		= true;
         ring	= THREEx.Planets.createUranusRing();
@@ -116,8 +146,9 @@ function switchValue(type){
         ambiLight.color.setHex(0x222222);
     }else if( type === 'Neptune' ){
         var mesh	= THREEx.Planets.createNeptune();
-        currentRotation = earthDefaultRotation / 0.666666;
     }else	console.assert(false);
+
+    updateCurrentRotation(type);
     scene.add(mesh);
     currentMesh	= mesh;
     location.hash	= type
