@@ -1,0 +1,5 @@
+<Alloy>
+	<View class="find">
+		<Label id="statusLabel" color="#fff"></Label>
+	</View>
+</Alloy>
