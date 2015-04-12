@@ -45,7 +45,7 @@ angular.module('map.controller', [])
 
                 for (var ii in planets) {
                     var distance = Math.sqrt( Math.pow(planets[ii].orbital.center[1], 2) + Math.pow(planets[ii].orbital.center[0], 2) );
-                    var bearing = Math.atan(planets[ii].orbital.center[0] * -1 / planets[ii].orbital.center[1]) / (Math.PI / 180);
+                    var bearing = Math.atan(planets[ii].orbital.center[1] * -1 / planets[ii].orbital.center[0]) / (Math.PI / 180);
                     var modifiedSunLatLng = google.maps.geometry.spherical.computeOffset(sunLatLng, distance, bearing);
                     planets[ii].modifiedSunLatLng = modifiedSunLatLng;
 
@@ -83,7 +83,7 @@ angular.module('map.controller', [])
                         planetRepresentation = colors['default'];
                     }
 
-                    var planetBearing = 90 - (planetPosition.polar.angle * 180 / Math.PI);
+                    var planetBearing = 90 - (planetPosition.polar.azimuth * 180 / Math.PI);
                     var planetLatLng = google.maps.geometry.spherical.computeOffset(planetData.modifiedSunLatLng, planetPosition.polar.radius, planetBearing);
 
                     var planetIcon = {
