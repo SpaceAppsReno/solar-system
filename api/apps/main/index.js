@@ -36,7 +36,11 @@ app.get('/realtime', function *realtime() {
 	if(!this.query.date) date = new Date();
 	else date = new Date(this.query.date);
 	
-	this.body = objects.map(function(object) {
+	this.body = calculate(objects, factor, date);
+});
+
+function calculate(objects, factor, date) {
+	return objects.map(function(object) {
 		var mechanics = Mechanics(object.orbital, date);
 		
 		var result = {
@@ -49,6 +53,10 @@ app.get('/realtime', function *realtime() {
 		result.polar = Scale(mechanics.polar, factor, ['radius']);
 		result.cartesian = Scale(mechanics.cartesian, factor, ['x','y','z']);
 		
+		if(object.moons) {
+			result.moons = calculate(object.moons, factor, date);
+		}
+		
 		return result;
 	});
-});
+}

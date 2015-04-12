@@ -51,6 +51,25 @@ module.exports = [
 			flattening: 0.0033528,
 			radius: 6371000,
 		},
+		moons: [
+			{
+				name: 'Moon',
+				orbital: {
+					semimajor: 384400000,
+					eccentricity: 0.0554,
+					period: 27.322,
+					anomaly: 306.67117 * rads,
+					inclination: 5.16 * rads,
+					ascending: 125.08 * rads,
+					argument: 318.15 * rads,
+					epoch: new Date('January 1 2000 12:00:00 UTC'),
+				},
+				physical: {
+					flattening: 0.00125,
+					radius: 1737100,
+				},
+			}
+		],
 	},
 	{
 		name: 'Mars',
