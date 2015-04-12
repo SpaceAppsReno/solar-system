@@ -1,0 +1,19 @@
+{
+  "name": "biggest-little-solar-system-api",
+  "version": "0.0.0-0",
+  "engines": {
+    "node": "0.12.x"
+  },
+  "main": "app.js",
+  "author": "Christopher Baker <christopher@hmudesign.com>",
+  "dependencies": {
+    "debug": "2.1.x",
+    "koa": "0.18.x",
+    "koa-body-parser": "1.1.x",
+    "koa-cors": "0.0.x",
+    "koa-mount": "1.3.x",
+    "koa-router": "4.2.x",
+    "koa-static": "1.4.x",
+    "underscore": "1.8.x"
+  }
+}

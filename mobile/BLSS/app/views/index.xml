@@ -2,8 +2,8 @@
 	<TabGroup>
 		<Tab title="Map" icon="KS_nav_ui.png">
 			<Window title="Map" onOpen="onOpen">
-			<Require src="find" id="find" />
-				<Require src="map" id="map" />				
+				<Require src="find" id="find" />
+				<Require src="map" id="map" />
 			</Window>
 		</Tab>
 		<Tab title="About" icon="KS_nav_views.png">

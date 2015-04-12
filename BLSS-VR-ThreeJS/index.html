@@ -9,18 +9,80 @@
 </style>
 
 	<head>
-		<title>My first Three.js app</title>
+		<title>BLSS-VR Web App</title>
 		<style>canvas { width: 100%; height: 100% }</style>
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/icons.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<script src="js/modernizr.custom.js"></script>
 	</head>
 	<body>
-    <div>
+		<div class="container">
+			<div class="mp-pusher" id="mp-pusher">
 
-    </div>
-    <div id="modelWindow">
-		<script src="js/three.min.js"></script>
-		<script src="threexPlanets/threex.planets.js"></script>
-		<script src="blss.js"></script>
-    </div>
+				<!-- mp-menu -->
+				<nav id="mp-menu" class="mp-menu">
+					<div class="mp-level">
+						<h2 class="icon icon-world">All Categories</h2>
+						<ul>
+							<li class="icon icon-arrow-left">
+								<a class="icon icon-settings" href="#">Settings</a>
+								<div class="mp-level">
+									<h2 class="icon icon-settings">Settings</h2>
+									<a class="mp-back" href="#">back</a>
+									<ul>
+										<li class="icon icon-arrow-left">
+											<a class="icon icon-phone" href="#" onclick="DeviceOrientationSetting();">
+												Device Orientation
+											</a>
+										</li>
+										<li class="icon icon-arrow-left">
+											<a class="icon icon-world" href="#" onclick="PlanetRotationSetting();">
+                                                Planet Rotation
+                                            </a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li class="icon icon-arrow-left">
+								<a class="icon icon-world" href="#">Explore</a>
+								<div class="mp-level" id="planetList">
+									<h2 class="icon icon-world">Explore</h2>
+									<a class="mp-back" href="#">back</a>
+									<ul >
+										<li><a href="#Sun" onclick = "switchValue('Sun');">Sun</a></li>
+										<li><a href="#Mercury" onclick = "switchValue('Mercury');">Mercury</a></li>
+										<li><a href="#Venus" onclick = "switchValue('Venus');">Venus</a></li>
+										<li><a href="#Earth" onclick = "switchValue('Earth');">Earth</a></li>
+										<li><a href="#Mars" onclick = "switchValue('Mars');">Mars</a></li>
+										<li><a href="#Jupiter" onclick = "switchValue('Jupiter');">Jupiter</a></li>
+										<li><a href="#Saturn" onclick = "switchValue('Saturn');">Saturn</a></li>
+										<li><a href="#Uranus" onclick = "switchValue('Uranus');">Uranus</a></li>
+										<li><a href="#Neptune" onclick = "switchValue('Neptune');">Neptune</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<div id="modelWindow" class="scroller-inner">
+					<p style="position:absolute">
+						<a href="#" id="trigger" class="menu-trigger" title = "Open/Close Menu">
+						</a>
+					</p>
+					<script src="js/three.min.js"></script>
+					<script src="threexPlanets/threex.planets.js"></script>
+					<script src="js/OrbitControls.js"></script>
+					<script src="blss.js"></script>
+				</div>
+			</div>
+		</div>
+		<script src="js/classie.js"></script>
+		<script src="js/mlpushmenu.js"></script>
+		<script>
+			new mlPushMenu( document.getElementById( 'mp-menu' ), document.getElementById( 'trigger' ) );
+		</script>
 	</body>
 
 </html>

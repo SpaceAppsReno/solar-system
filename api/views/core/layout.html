@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= data.title %> | Planetarium</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		
+<% data.styles = [].concat(data.styles || []) %>
+<% data && _.each(data.styles, function(value) { %>
+		<link rel="stylesheet" href="<%= value %>" />
+<% }); %>
+<% data.scripts = [].concat(data.scripts || []) %>
+<% data && _.each(data.scripts, function(value) { %>
+		<script type="text/javascript" src="<%= value %>"></script>
+<% }); %>
+	</head>
+	<body>
+<%= data.content %>
+	</body>
+</html>

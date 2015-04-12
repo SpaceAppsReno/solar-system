@@ -1,0 +1,23 @@
+<% this.extend(["core","layout.html"], {
+	title: "Alignment App",
+	styles: [
+		"/lib/hmu/style.css",
+	].concat(data.styles || []),
+	scripts: [
+		"/vendor/es6-promise.min.js",
+		"/vendor/tween.min.js",
+		"/vendor/stats.min.js",
+		"/vendor/three.min.js",
+		
+		"/lib/hmu/world.js",
+		"/lib/hmu/world.resize.js",
+		"/lib/hmu/object3d.js",
+		
+		"/planetarium/world.planetarium.js",
+		"/planetarium/planetarium.js",
+		"/planetarium/fonts/fonts.js",
+		"/planetarium/dome/dome.js",
+		"/planetarium/fisheye/fisheye.js",
+		"/planetarium/loading/loading.js",
+	].concat(data.scripts || []),
+}) %>

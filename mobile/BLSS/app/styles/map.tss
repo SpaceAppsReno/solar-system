@@ -57,8 +57,8 @@
 	image: "/mars/Icon.png"
 },
 "#jupiter": {
-	latitude: 39.552224,
-	longitude: -119.776612,
+	latitude: 39.52535,
+	longitude: -119.816756,
 	animate: true,
 	leftButton: Ti.UI.iPhone.SystemButton.INFO_DARK,
 	title: "Jupiter",
