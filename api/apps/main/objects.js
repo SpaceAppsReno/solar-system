@@ -16,7 +16,7 @@ module.exports = [
 		physical: {
 			flattening: 0,
 			radius: 2439700,
-		}
+		},
 	},
 	{
 		name: 'Venus',
@@ -33,7 +33,7 @@ module.exports = [
 		physical: {
 			flattening: 0,
 			radius: 6051800,
-		}
+		},
 	},
 	{
 		name: 'Earth',
@@ -50,7 +50,7 @@ module.exports = [
 		physical: {
 			flattening: 0.0033528,
 			radius: 6371000,
-		}
+		},
 	},
 	{
 		name: 'Mars',
@@ -67,7 +67,7 @@ module.exports = [
 		physical: {
 			flattening: 0.00589,
 			radius: 3389500,
-		}
+		},
 	},
 	{
 		name: 'Ceres',
@@ -83,7 +83,7 @@ module.exports = [
 		},
 		physical: {
 			radius: 476200,
-		}
+		},
 	},
 	{
 		name: 'Jupiter',
@@ -100,7 +100,7 @@ module.exports = [
 		physical: {
 			flattening: 0.06487,
 			radius: 69911000,
-		}
+		},
 	},
 	{
 		name: 'Saturn',
@@ -117,7 +117,7 @@ module.exports = [
 		physical: {
 			flattening: 0.09796,
 			radius: 58232000,
-		}
+		},
 	},
 	{
 		name: 'Uranus',
@@ -134,7 +134,7 @@ module.exports = [
 		physical: {
 			flattening: 0.0229,
 			radius: 25362000,
-		}
+		},
 	},
 	{
 		name: 'Neptune',
@@ -151,7 +151,7 @@ module.exports = [
 		physical: {
 			flattening: 0.0171,
 			radius: 24622000,
-		}
+		},
 	},
 	{
 		name: 'Pluto',
@@ -167,15 +167,94 @@ module.exports = [
 		},
 		physical: {
 			radius: 1184000,
-		}
+		},
+	},
+	{
+		name: 'Halley\'s Comet',
+		orbital: {
+			semimajor: 2667950010000,
+			eccentricity: 0.96714291,
+			period: 27510,
+			anomaly: 139.4753 * rads,
+			inclination: 162.26269 * rads,
+			ascending: 58.42008 * rads,
+			argument: 111.33249 * rads,
+			epoch: new Date('January 1 2000 12:00:00 UTC'),
+		},
+		physical: {
+			radius: 5500,
+		},
+	},
+	{
+		name: 'Makemake',
+		orbital: {
+			semimajor: 6838866660 * 1000,
+			eccentricity: 0.15586,
+			period: 112897,
+			anomaly: 156.353 * rads,
+			inclination: 29.00685 * rads,
+			ascending: 79.3659 * rads,
+			argument: 297.240 * rads,
+			epoch: new Date('December 09 2014 12:00:00 UTC')
+		},
+		physical: {
+			radius: 715000,
+		},
+	},
+	{
+		name: 'Eris',
+		orbital: {
+			semimajor: 1.01398933 * Math.pow(10,13),
+			eccentricity: 0.44068,
+			period: 203830,
+			anomaly: 204.16 * rads,
+			inclination: 44.0445 * rads,
+			ascending: 35.9531 * rads,
+			argument: 150.977 * rads,
+			epoch: new Date('December 09 2014 12:00:00 UTC')
+		},
+		physical: {
+			radius: 1163000,
+		},
+	},
+	{
+		name: 'Haumea',
+		orbital: {
+			semimajor: 6.46532078 * Math.pow(10,12),
+			eccentricity: 0.19126,
+			period: 103774,
+			anomaly: 209.07 * rads,
+			inclination: 28.19 * rads,
+			ascending: 121.79 * rads,
+			argument: 240.20 * rads,
+			epoch: new Date('December 09 2014 12:00:00 UTC')
+		},
+		physical: {
+			radius: 620000,
+		},
 	},
 ];
 
+function slugify(name) {
+	return name.toLowerCase()
+		.replace(/\s+/g, '-')           // Replace spaces with -
+		.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+		.replace(/\-\-+/g, '-')         // Replace multiple - with single -
+		.replace(/^-+/, '')             // Trim - from start of text
+		.replace(/-+$/, '');            // Trim - from end of text
+}
+
 module.exports.map(function(value) {
+	value.slug = slugify(value.name);
+	
 	value.orbital.semiminor = value.orbital.semimajor * Math.sqrt(1 - Math.pow(value.orbital.eccentricity, 2));
 	
+	var distance = Math.sqrt(Math.pow(value.orbital.semimajor, 2) - Math.pow(value.orbital.semiminor, 2));
 	value.orbital.focus1 = value.orbital.focus1 || [0, 0];
-	value.orbital.focus2 = value.orbital.focus2 || [0, Math.sqrt(Math.pow(value.orbital.semimajor, 2) - Math.pow(value.orbital.semiminor, 2))];
+	value.orbital.focus2 = value.orbital.focus2 || [
+		value.orbital.focus1[0] + distance * Math.sin(0),
+		value.orbital.focus1[1] + distance * Math.cos(0)
+	];
 	
 	value.orbital.center = [ (value.orbital.focus1[0] + value.orbital.focus2[0]) / 2, (value.orbital.focus1[1] + value.orbital.focus2[1]) / 2 ];
 	value.orbital.rotation = Math.atan2(value.orbital.focus2[0] - value.orbital.focus1[0], value.orbital.focus2[1] - value.orbital.focus1[1]);

@@ -14,6 +14,7 @@ var calculate = (function() {
 	
 	function KeplersEquation(mean, eccentricity, epsilon) {
 		mean = wrap(mean);
+		
 		var delta, e = mean;
 		
 		do {

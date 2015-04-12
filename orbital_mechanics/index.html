@@ -37,7 +37,7 @@ drawPlanet(0, 0, "Sun", "White", scale);
 var colorCurrent = "Red";
 var colorPredicted = "Gray";
 
-var plots = Math.pow(2,10);
+var plots = Math.pow(2, 10);
 
 objects.forEach(function(object, index) {
 	
@@ -47,7 +47,7 @@ objects.forEach(function(object, index) {
 	var last = null;
 	
 	for(var d = 0; d <= plots; d++) {
-		var date = new Date();
+		var date = new Date("October 4 2023 12:00:00 UTC");
 		date.setDate(date.getDate() + d * (object.period / plots));
 		
 		var values = calculate(object, date);
@@ -62,8 +62,6 @@ objects.forEach(function(object, index) {
 			var deltaX = values.cartesian.x - last.cartesian.x;
 			var deltaY = values.cartesian.y - last.cartesian.y;
 			var delta = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-			console.log(object.name, delta / 142110612.24489793);
-			
 		}
 		
 		if (d == 0) {

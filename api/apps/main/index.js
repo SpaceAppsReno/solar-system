@@ -15,7 +15,12 @@ app.get('/characteristics', function *characteristics() {
 	var factor = 1 / (+this.query.factor || 1);
 	
 	this.body = objects.map(function(object) {
-		var result = { name: object.name, epoch: object.orbital.epoch.toUTCString() };
+		var result = {
+			name: object.name,
+			slug: object.slug,
+			epoch: object.orbital.epoch.toUTCString(),
+		};
+		
 		result.orbital = Scale(object.orbital, factor, ['semimajor','semiminor','focus1','focus2','center']);
 		result.physical = Scale(object.physical, factor, ['radius']);
 		delete result.orbital.epoch;
@@ -26,12 +31,21 @@ app.get('/characteristics', function *characteristics() {
 
 app.get('/realtime', function *realtime() {
 	var factor = 1 / (+this.query.factor || 1);
-	var date = new Date(this.query.date || null);
+	
+	var date;
+	if(!this.query.date) date = new Date();
+	else date = new Date(this.query.date);
 	
 	this.body = objects.map(function(object) {
 		var mechanics = Mechanics(object.orbital, date);
 		
-		var result = { name: object.name, date: date.toUTCString(), epoch: object.orbital.epoch.toUTCString() };
+		var result = {
+			name: object.name,
+			slug: object.slug,
+			date: date.toUTCString(),
+			epoch: object.orbital.epoch.toUTCString(),
+		};
+		
 		result.polar = Scale(mechanics.polar, factor, ['radius']);
 		result.cartesian = Scale(mechanics.cartesian, factor, ['x','y','z']);
 		
