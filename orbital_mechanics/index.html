@@ -1,0 +1,47 @@
+<canvas id="demoCanvas" width="700" height="700" style="background-color:#000;"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/EaselJS/0.8.0/easeljs.min.js"></script>
+<script src="objects.js"></script>
+<script src="calculation.js"></script>
+
+<script>
+var stage = new createjs.Stage("demoCanvas");
+
+var centerX = document.getElementById('demoCanvas').width / 2;
+var centerY = document.getElementById('demoCanvas').height / 2;
+
+function drawPlanet(x, y, name, color, scale) {
+	var circle = new createjs.Shape();
+	circle.graphics.beginFill(color).drawCircle(0, 0, 5);
+	circle.x = centerX + (x * scale);
+	circle.y = centerY - (y * scale);
+	stage.addChild(circle);
+	
+	var text = new createjs.Text(name, "20px Arial", color);
+	text.x = centerX + (x * scale) + 10;
+	text.y = centerY - (y * scale) - 10;
+	text.textBaseline = "alphabetic";
+	stage.addChild(text);
+}
+
+
+var delta = new Date("April 11 2015 23:00:00 UTC").getEpochDelta();
+var scale = 100;
+
+stage.clear();
+
+drawPlanet(0, 0, "Sun", "White", scale);
+
+var colors = ['OrangeRed'];
+
+objects.forEach(function(object, index) {
+	var values = calculate(object, delta);
+	
+	var name = object.name;
+	var color = colors[index] || "Red";
+	
+	drawPlanet(values.cartesian.x, values.cartesian.y, name, color, scale);
+});
+
+stage.update();
+</script>
