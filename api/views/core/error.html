@@ -1,0 +1,6 @@
+<% this.extend(["core","layout.html"]) %>
+
+<h1>Error <%= data.status %>: <%= data.title %></h1>
+<% if(data.message) { %>
+	<p><%= data.message %></p>
+<% } %>
