@@ -1,0 +1,8 @@
+<ion-view view-title="{{Detail.planetName | uppercase}}">
+    <ion-content>
+        <h1>{{Detail.planet.name}}</h1>
+        <dl>
+            <dt>Radius: </dt><dd>{{Detail.planet.physical.radius * 100 | toFixed:3}}cm, {{Detail.planet.physical.radius * 39.3700787 | toFixed:3}}in</dd>
+        </dl>
+    </ion-content>
+</ion-view>
