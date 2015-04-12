@@ -28,7 +28,7 @@ function drawPlanet(x, y, name, color, scale) {
 
 
 var scale = 1/1500000000;
-scale /= 10;
+scale /= 25;
 
 stage.clear();
 
@@ -37,7 +37,7 @@ drawPlanet(0, 0, "Sun", "White", scale);
 var colorCurrent = "Red";
 var colorPredicted = "Gray";
 
-var plots = Math.pow(2,6);
+var plots = Math.pow(2,10);
 
 objects.forEach(function(object, index) {
 	
