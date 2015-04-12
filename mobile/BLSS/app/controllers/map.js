@@ -2,20 +2,12 @@ $.map.addEventListener('click', function(e) {
 	Ti.API.info("map.click: " + JSON.stringify(e));
 });
 
-
-
-
-exports.addAnnotation = function(geodata) {
-	var annotation = Alloy.createController('annotation', {
-		title : geodata.title,
-		latitude : geodata.coords.latitude,
-		longitude : geodata.coords.longitude
-	});
-	$.map.addAnnotation(annotation.getView());
+$.on('updateLocation', function(geodata) {
 	$.map.setLocation({
-		latitude : geodata.coords.latitude,
-		longitude : geodata.coords.longitude,
-		latitudeDelta : 1,
-		longitudeDelta : 1
+		latitude : geodata.latitude,
+		longitude : geodata.longitude,
+		animate : geodata.animate,
+		latitudeDelta : geodata.latitudeDelta,
+		longitudeDelta : geodata.longitudeDelta
 	});
-}; 
+});

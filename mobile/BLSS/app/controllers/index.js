@@ -15,6 +15,21 @@ var weAreTheUser = false,
 
 var counter = 0;
 
+/*
+ {
+ "accuracy": 100,
+ "altitude": 0,
+ "altitudeAccuracy": null,
+ "heading": 0,
+ "latitude": 40.493781233333333,
+ "longitude": -80.056671
+ "speed": 0,
+ "timestamp": 1318426498331
+ }
+ */
+
+var currentLocation = null;
+
 var planets = [{
 	name : 'Mercury',
 	color : 'orange',
@@ -43,6 +58,148 @@ var planets = [{
 	innerOrbit : 1753.563622,
 	outerOrbit : 1454.500806,
 	semiMajorAxis : 1604
+}];
+
+var solarSystem = [{
+	id : 0,
+	name : 'The Sun',
+	image : '/sun/Icon.png',
+	location : {
+		latitude : 39.545898,
+		longitude : -119.819362,
+		animate : true,
+		leftButton : Ti.UI.iPhone.SystemButton.INFO_DARK,
+		rightButton : '/sun/Icon.png',
+		title : "Sun",
+		subtitle : "Fleischmann Planetarium and Science Center",
+		image : "/sun/Icon.png"
+	}
+}, {
+	id : 1,
+	name : 'Mercury',
+	image : '/mercury/Icon.png',
+	location : {
+		latitude : 39.5513768,
+		longitude : -119.8196046,
+		animate : true,
+		leftButton : Ti.UI.iPhone.SystemButton.INFO_DARK,
+		rightButton : '/mercury/Icon.png',
+		title : "Mercury",
+		subtitle : "(nearby landmark)",
+		image : "/mercury/Icon.png"
+	}
+}, {
+	id : 2,
+	name : 'Venus',
+	image : '/venus/Icon.png',
+	location : {
+		latitude : 39.5457904,
+		longitude : -119.8206709,
+		animate : true,
+		leftButton : Ti.UI.iPhone.SystemButton.INFO_DARK,
+		rightButton : '/venus/Icon.png',
+		title : "Venus",
+		subtitle : "(nearby landmark)",
+		image : "/venus/Icon.png"
+	}
+}, {
+	id : 3,
+	name : 'Earth',
+	image : '/earth/Icon.png',
+	location : {
+		latitude : 39.5385841,
+		longitude : -119.8128281,
+		animate : true,
+		leftButton : Ti.UI.iPhone.SystemButton.INFO_DARK,
+		rightButton : '/earth/Icon.png',
+		title : "Earth",
+		subtitle : "(nearby landmark)",
+		image : "/earth/Icon.png"
+	}
+}, {
+	id : 4,
+	name : 'Mars',
+	image : '/mars/Icon.png',
+	location : {
+		latitude : 39.52359,
+		longitude : -119.8046957,
+		animate : true,
+		leftButton : Ti.UI.iPhone.SystemButton.INFO_DARK,
+		rightButton : '/mars/Icon.png',
+		title : "Mars",
+		subtitle : "(nearby landmark)",
+		image : "/mars/Icon.png"
+	}
+}, {
+	id : 5,
+	name : 'Jupiter',
+	image : '/jupiter/Icon.png',
+	location : {
+		latitude : 39.52535,
+		longitude : -119.816756 ,
+		animate : true,
+		leftButton : Ti.UI.iPhone.SystemButton.INFO_DARK,
+		rightButton : "/jupiter/Icon.png",
+		title : "Jupiter",
+		subtitle : "(nearby landmark)",
+		image : "/jupiter/Icon.png"
+	}
+}, {
+	id : 6,
+	name : 'Saturn',
+	image : '/saturn/Icon.png',
+	location : {
+		latitude : 39.528994,
+		longitude : -119.8081,
+		animate : true,
+		leftButton : Ti.UI.iPhone.SystemButton.INFO_DARK,
+		rightButton : '/saturn/Icon.png',
+		title : "Saturn",
+		subtitle : "(nearby landmark)",
+		image : "/saturn/Icon.png"
+	}
+}, {
+	id : 7,
+	name : 'Uranus',
+	image : '/uranus/Icon.png',
+	location : {
+		latitude : 39.5366676,
+		longitude : -119.85006,
+		animate : true,
+		leftButton : Ti.UI.iPhone.SystemButton.INFO_DARK,
+		rightButton : '/uranus/Icon.png',
+		title : "Uranus",
+		subtitle : "(nearby landmark)",
+		image : "/uranus/Icon.png"
+	}
+}, {
+	id : 8,
+	name : 'Neptune',
+	image : '/neptune/Icon.png',
+	location : {
+		latitude : 39.4974957,
+		longitude : -119.769852,
+		animate : true,
+		leftButton : Ti.UI.iPhone.SystemButton.INFO_DARK,
+		rightButton : "/neptune/Icon.png",
+		title : "Neptune",
+		subtitle : "(nearby landmark)",
+		image : "/neptune/Icon.png"
+	}
+}, {
+	id : 9,
+	name : 'Pluto',
+	image : '/pluto/Icon.png',
+	location : {
+		latitude : 39.4147367,
+		longitude : -119.8059961,
+		animate : true,
+		leftButton : Ti.UI.iPhone.SystemButton.INFO_DARK,
+		rightButton : "/pluto/Icon.png",
+		title : "Pluto",
+		subtitle : "(nearby landmark)",
+		image : "/pluto/Icon.png"
+	}
 }];
 
 var BluetoothLE = require('com.logicallabs.bluetoothle'),
@@ -114,7 +271,7 @@ function initCentral() {
 		// });
 	});
 	Ti.API.info('Location manager authorization status: ' + BluetoothLE.locationManagerAuthorizationStatus);
-	setStatus('Started region monitoring...');
+	setStatus('Looking for solar system objects...');
 }
 
 function shutdown() {
@@ -171,7 +328,6 @@ BluetoothLE.addEventListener('peripheralManagerStateChange', function(e) {
 		break;
 	case BluetoothLE.PERIPHERAL_MANAGER_STATE_POWERED_ON:
 		Ti.API.info('Peripheral manager changed state to powered on.');
-		setStatus('Firing up beacon #' + (counter % beaconRegions.length) + '...');
 		BluetoothLE.startAdvertising({
 			beaconRegion : beaconRegions[counter % beaconRegions.length]
 		});
@@ -210,28 +366,30 @@ BluetoothLE.addEventListener('rangedBeacons', function(e) {
 	i = 0;
 	e.beacons.forEach(function(beacon) {
 		i++;
-		Ti.API.info('Beacon #' + i);
+		// Ti.API.info('Beacon #' + i);
 		// Ti.API.info('    UUID: ' + beacon.UUID);
-		Ti.API.info('    major: ' + beacon.major);
-		Ti.API.info('    minor: ' + beacon.minor);
+		// Ti.API.info('    major: ' + beacon.major);
+		// Ti.API.info('    minor: ' + beacon.minor);
 		// Ti.API.info('    RSSI: ' + beacon.RSSI);
 		// Ti.API.info('    proximity: ' + getProximityString(beacon));
 
 		if (beacon.major == 1) {
-			switch(beacon.minor) {
-			case (0):
-					statusMsg = 'You are near the Sun';
-					setStatus(statusMsg);
-					// get current GPS location and update map pin
-				break;
-			case (1):
-					statusMsg = 'You are near Mercury';
-					setStatus(statusMsg);
-					// get current GPS location and update map pin
-				break;
-			default:
-				Ti.API.debug("not a beacon of iterest");
+			var solarSystemObject = solarSystem[beacon.minor];
 
+			statusMsg = 'You are near ' + solarSystemObject.name;
+			setStatus(statusMsg);
+
+			if (Ti.Geolocation.locationServicesEnabled) {
+				$.map.trigger('updateLocation', {
+					latitude : solarSystemObject.location.latitude,
+					longitude : solarSystemObject.location.longitude,
+					animate : true,
+					latitudeDelta : 0.01,
+					longitudeDelta : 0.01
+				});
+				
+			} else {
+				alert('Please enable location services');
 			}
 		}
 
@@ -414,6 +572,7 @@ if (OS_IOS) {
 			});
 		}
 	});
+
 }
 
 if (OS_ANDROID) {
@@ -437,6 +596,24 @@ if (OS_ANDROID) {
 	default:
 		alert('Unknown error.');
 	}
+
+}
+
+if (Ti.Geolocation.locationServicesEnabled) {
+	Titanium.Geolocation.purpose = 'Get Current Location';
+	Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_LOW;
+	Ti.Geolocation.distanceFilter = 10;
+	Ti.Geolocation.preferredProvider = Ti.Geolocation.PROVIDER_GPS;
+	Titanium.Geolocation.getCurrentPosition(function(e) {
+		if (e.error) {
+			Ti.API.error('Error: ' + e.error);
+		} else {
+			Ti.API.info(e.coords);
+			currentLocation = e;
+		}
+	});
+} else {
+	alert('Please enable location services');
 }
 
 $.index.open();
