@@ -113,7 +113,7 @@ var objects = (function() {
 			epoch: new Date('January 1 2000 12:00:00 UTC'),
 		},
 		{
-			name: 'Halley's Comet,
+			name: 'Halley\'s Comet',
 			semimajor: 2667950010000,
 			eccentricity: 0.96714291,
 			period: 27510,
