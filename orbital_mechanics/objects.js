@@ -155,6 +155,18 @@ var objects = (function() {
 			ascending: 121.79 * rads,
 			argument: 240.20 * rads,
 			epoch: new Date('December 09 2014 12:00:00 UTC')
+		},
+		{
+			name: 'Moon',
+			semimajor: 384400000,
+			eccentricity: 0.0554,
+			period: 27.322,
+			anomaly: 306.67117 * rads,
+			inclination: 5.16 * rads,
+			ascending: 125.08 * rads,
+			argument: 318.15 * rads,
+			epoch: new Date('January 1 2000 12:00:00 UTC'),
+			parent: 'Earth'
 		}
 	];
 	
