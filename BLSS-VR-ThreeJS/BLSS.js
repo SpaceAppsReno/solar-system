@@ -1,8 +1,9 @@
+var container = document.getElementById("modelWindow");
 var renderer	= new THREE.WebGLRenderer({
     antialias	: true
 });
 renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
+container.appendChild( renderer.domElement );
 renderer.shadowMapEnabled	= true;
 
 var updateFcts	= [];
@@ -13,24 +14,23 @@ camera.position.z = 1.5;
 var ambiLight	= new THREE.AmbientLight( 'white' );
 scene.add( ambiLight );
 
-var light	= new THREE.DirectionalLight( 0xcccccc, 1 )
-light.position.set(5,5,5)
-light.castShadow	= true
-light.shadowCameraNear	= 0.01
-light.shadowCameraFar	= 15
-light.shadowCameraFov	= 45
+var spotlight	= new THREE.DirectionalLight( 0xcccccc, 1 )
+spotlight.position.set(5,5,5)
+spotlight.castShadow	= true
+spotlight.shadowCameraNear	= 0.01
+spotlight.shadowCameraFar	= 15
+spotlight.shadowCameraFov	= 45
 
-light.shadowCameraLeft	= -1
-light.shadowCameraRight	=  1
-light.shadowCameraTop	=  1
-light.shadowCameraBottom= -1
+spotlight.shadowCameraLeft	= -1
+spotlight.shadowCameraRight	=  1
+spotlight.shadowCameraTop	=  1
+spotlight.shadowCameraBottom= -1
 // light.shadowCameraVisible	= true
+spotlight.shadowBias	= 0.001
+spotlight.shadowDarkness	= 0.2
 
-light.shadowBias	= 0.001
-light.shadowDarkness	= 0.2
-
-light.shadowMapWidth	= 1024*2
-light.shadowMapHeight	= 1024*2
+spotlight.shadowMapWidth	= 1024*2
+spotlight.shadowMapHeight	= 1024*2
 
 
 
@@ -49,13 +49,21 @@ scene.add(starSphere);
 var currentMesh	= null;
 var earthDefaultRotation = .004;
 var currentRotation = earthDefaultRotation;
+var cloud = null;
+var ring = null;
 function switchValue(type){
     currentMesh && scene.remove(currentMesh);
+    scene.remove(ring);
+    scene.remove(cloud);
+    scene.remove(spotlight);
+    ambiLight.color.setHex(0xffffff);
     if( type === 'Sun' ){
         var mesh	= THREEx.Planets.createSun();
-        currentRotation = earthDefaultRotation / 26;
+        mesh.name = "Sun";
+            currentRotation = earthDefaultRotation / 26;
     }else if( type === 'Mercury' ){
         var mesh	= THREEx.Planets.createMercury();
+        mesh.name = 'Mercury';
         currentRotation = earthDefaultRotation / 58.625;
     }else if( type === 'Venus' ){
         var mesh	= THREEx.Planets.createVenus();
@@ -66,7 +74,7 @@ function switchValue(type){
     }else if( type === 'Earth' ){
         var mesh	= THREEx.Planets.createEarth();
         currentRotation = earthDefaultRotation;
-        var cloud	= THREEx.Planets.createEarthCloud();
+        cloud	= THREEx.Planets.createEarthCloud();
         mesh.add(cloud)
     }else if( type === 'Mars' ){
         var mesh	= THREEx.Planets.createMars();
@@ -79,9 +87,9 @@ function switchValue(type){
         currentRotation = earthDefaultRotation / 0.4441666;
         mesh.receiveShadow	= true;
         mesh.castShadow		= true;
-        scene.add(light);
+        scene.add(spotlight);
         ambiLight.color.setHex(0x222222);
-        var ring	= THREEx.Planets.createSaturnRing();
+        ring	= THREEx.Planets.createSaturnRing();
         ring.receiveShadow	= true;
         ring.castShadow		= true;
         scene.add(ring);
@@ -90,10 +98,10 @@ function switchValue(type){
         currentRotation = earthDefaultRotation / 0.71875;
         mesh.receiveShadow	= true;
         mesh.castShadow		= true;
-        var ring	= THREEx.Planets.createUranusRing();
+        ring	= THREEx.Planets.createUranusRing();
         ring.receiveShadow	= true;
         ring.castShadow		= true;
-        scene.add(light);
+        scene.add(spotlight);
         scene.add(ring);
         ambiLight.color.setHex(0x222222);
     }else if( type === 'Neptune' ){
