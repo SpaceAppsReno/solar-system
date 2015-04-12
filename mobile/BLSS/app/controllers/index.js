@@ -51,7 +51,8 @@ var BluetoothLE = require('com.logicallabs.bluetoothle'),
 // The central/monitoring side monitors for all of these regions
 // simultaneously. The peripheral/beacon side cycles through them one by
 // one, every time it's restarted.
-    BEACON_REGION_UUIDS = ['A495B155-C5B1-4B44-B512-1370F02D74DE'];
+    BEACON_REGION_UUIDS = ['A495B155-C5B1-4B44-B512-1370F02D74DE'],
+    androidNotificationId = 1;
 
 function initBeaconRegionsForCentral() {
 	// The difference between this and initBeaconRegionsForBeacon is
@@ -90,7 +91,7 @@ function initBeaconRegionsForBeacon() {
 
 function initCentral() {
 	// Central === user (as opposed to beacon).
-//	initBeaconRegionsForCentral();
+	//	initBeaconRegionsForCentral();
 	initBeaconRegionsForBeacon();
 	beaconRegions.forEach(function(region) {
 		BluetoothLE.startRegionMonitoring({
@@ -200,17 +201,40 @@ BluetoothLE.addEventListener('rangedBeacons', function(e) {
 	if (!open) {
 		return;
 	}
-	Ti.API.info('Beacons in range: ' + e.beacons.length);
+	// Ti.API.info('Beacons in range: ' + e.beacons.length);
 
-	Ti.API.info('Region.UUID: ' + e.region.UUID);
-	Ti.API.info('Region.major: ' + e.region.major);
-	Ti.API.info('Region.minor: ' + e.region.minor);
+	// Ti.API.info('Region.UUID: ' + e.region.UUID);
+	// Ti.API.info('Region.major: ' + e.region.major);
+	// Ti.API.info('Region.minor: ' + e.region.minor);
 
 	i = 0;
 	e.beacons.forEach(function(beacon) {
 		i++;
 		Ti.API.info('Beacon #' + i);
-		Lib.printBeaconInfo(beacon);
+		// Ti.API.info('    UUID: ' + beacon.UUID);
+		Ti.API.info('    major: ' + beacon.major);
+		Ti.API.info('    minor: ' + beacon.minor);
+		// Ti.API.info('    RSSI: ' + beacon.RSSI);
+		// Ti.API.info('    proximity: ' + getProximityString(beacon));
+
+		if (beacon.major == 1) {
+			switch(beacon.minor) {
+			case (0):
+					statusMsg = 'You are near the Sun';
+					setStatus(statusMsg);
+					// get current GPS location and update map pin
+				break;
+			case (1):
+					statusMsg = 'You are near Mercury';
+					setStatus(statusMsg);
+					// get current GPS location and update map pin
+				break;
+			default:
+				Ti.API.debug("not a beacon of iterest");
+
+			}
+		}
+
 	});
 });
 
@@ -242,8 +266,8 @@ BluetoothLE.addEventListener('regionStateUpdated', function(e) {
 		stateStr = 'outside.';
 		break;
 	}
-	statusMsg = 'Region state for ' + e.region.UUID.slice(0, 8) + ' is now ' + stateStr;
-	setStatus(statusMsg);
+	// statusMsg = 'Region state for ' + e.region.UUID.slice(0, 8) + ' is now ' + stateStr;
+	// setStatus(statusMsg);
 
 	if (Lib.isInForeground() || e.state === BluetoothLE.REGION_STATE_UNKNOWN) {
 		// The remainder of this callback posts a local notification;
@@ -262,13 +286,13 @@ BluetoothLE.addEventListener('regionStateUpdated', function(e) {
 		intent = Ti.Android.createIntent({
 			flags : Ti.Android.FLAG_ACTIVITY_BROUGHT_TO_FRONT,
 			// Substitute the correct classname for your application
-			className : 'com.logicallabs.bletest.BluetoothletestActivity'
+			className : 'org.spaceappsreno.blss.BlssActivity'
 		});
 
 		// Note: Unlike iOS, Android will post the local notification
 		// even if the app is in the foreground.
 		Titanium.Android.NotificationManager.notify(androidNotificationId++, Ti.Android.createNotification({
-			contentTitle : 'iBeacons Test',
+			contentTitle : 'BLSS',
 			contentText : statusMsg,
 			contentIntent : Ti.Android.createPendingIntent({
 				intent : intent,
@@ -331,21 +355,23 @@ BluetoothLE.addEventListener('retrievedMonitoredRegions', function(e) {
 });
 
 function setStatus(text) {
-	$.find.trigger('updateStatus', {status: text});
+	$.find.trigger('updateStatus', {
+		status : text
+	});
 	Ti.API.info(text);
 }
 
 // $.addEventListener('restored', function() {
-	// Ti.API.info('Restoring iBeacon example...');
-	// open = true;
-	// setupAsUser();
-	// BluetoothLE.retrieveMonitoredRegions();
+// Ti.API.info('Restoring iBeacon example...');
+// open = true;
+// setupAsUser();
+// BluetoothLE.retrieveMonitoredRegions();
 // });
-// 
+//
 // $.addEventListener('pause', function() {
-	// Ti.API.info('Closing iBeacon example...');
-	// shutdown();
-	// open = false;
+// Ti.API.info('Closing iBeacon example...');
+// shutdown();
+// open = false;
 // });
 
 BluetoothLE.addEventListener('locationManagerAuthorizationChanged', function(e) {
@@ -371,22 +397,46 @@ if (Ti.Platform.name == "iPhone OS" && parseInt(Ti.Platform.version.split(".")[0
 	});
 }
 
-// Fired when the application receives an incoming local notification when it's in the foreground
-Ti.App.iOS.addEventListener('notification', function(e) {
+if (OS_IOS) {
+	// Fired when the application receives an incoming local notification when it's in the foreground
+	Ti.App.iOS.addEventListener('notification', function(e) {
 
-	// Process custom data
-	// if (e.userInfo && "url" in e.userInfo) {
+		// Process custom data
+		// if (e.userInfo && "url" in e.userInfo) {
 		// httpGetRequest(e.userInfo.url);
-	// }
+		// }
 
-	// Reset the badge value
-	if (e.badge > 0) {
-		Ti.App.iOS.scheduleLocalNotification({
-			date : new Date(new Date().getTime()),
-			badge : -1
-		});
+		// Reset the badge value
+		if (e.badge > 0) {
+			Ti.App.iOS.scheduleLocalNotification({
+				date : new Date(new Date().getTime()),
+				badge : -1
+			});
+		}
+	});
+}
+
+if (OS_ANDROID) {
+	var rc = Alloy.Globals.Map.isGooglePlayServicesAvailable();
+	switch (rc) {
+	case Alloy.Globals.Map.SUCCESS:
+		Ti.API.info('Google Play services is installed.');
+		break;
+	case Alloy.Globals.Map.SERVICE_MISSING:
+		alert('Google Play services is missing. Please install Google Play services from the Google Play store.');
+		break;
+	case Alloy.Globals.Map.SERVICE_VERSION_UPDATE_REQUIRED:
+		alert('Google Play services is out of date. Please update Google Play services.');
+		break;
+	case Alloy.Globals.Map.SERVICE_DISABLED:
+		alert('Google Play services is disabled. Please enable Google Play services.');
+		break;
+	case Alloy.Globals.Map.SERVICE_INVALID:
+		alert('Google Play services cannot be authenticated. Reinstall Google Play services.');
+		break;
+	default:
+		alert('Unknown error.');
 	}
-});
-
+}
 
 $.index.open();
