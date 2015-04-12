@@ -111,6 +111,17 @@ var objects = (function() {
 			ascending: 110.28683 * rads,
 			argument: 113.76349 * rads,
 			epoch: new Date('January 1 2000 12:00:00 UTC'),
+		},
+		{
+			name: 'Halley's Comet,
+			semimajor: 2667950010000,
+			eccentricity: 0.96714291,
+			period: 27510,
+			anomaly: 139.4753 * rads,
+			inclination: 162.26269 * rads,
+			ascending: 58.42008 * rads,
+			argument: 111.33249 * rads,
+			epoch: new Date('January 1 2000 12:00:00 UTC'),
 		}
 	];
 	
