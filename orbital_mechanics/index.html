@@ -26,21 +26,19 @@ function drawPlanet(x, y, name, color, scale) {
 
 
 var date = new Date("April 11 2015 23:00:00 UTC");
-var scale = 100;
+var scale = 1/1500000000;
+scale /= 10;
 
 stage.clear();
 
 drawPlanet(0, 0, "Sun", "White", scale);
 
-var colors = ['OrangeRed'];
-
 objects.forEach(function(object, index) {
 	var values = calculate(object, date);
 	
 	var name = object.name;
-	var color = colors[index] || "Red";
 	
-	drawPlanet(values.cartesian.x, values.cartesian.y, name, color, scale);
+	drawPlanet(values.cartesian.x, values.cartesian.y, name, "Red", scale);
 });
 
 stage.update();
