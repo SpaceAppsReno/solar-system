@@ -4,6 +4,7 @@ var objects = (function() {
 	var objects = [
 		{
 			name: 'Mars',
+			epoch: new Date("January 1 2000 12:00:00 UTC"),
 			semimajor: 1.523679, // semi-major axis (au)
 			eccentricity: 0.0935, // eccentricity of orbit
 			inclination: 1.850 * rads, // inclination to ecliptic

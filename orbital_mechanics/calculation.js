@@ -1,6 +1,5 @@
-Date.prototype.getEpochDelta = function() {
-	var J2000 = new Date("January 1 2000 12:00:00 UTC");
-	return (this.valueOf() - J2000.valueOf()) / 86400000 - (this.getTimezoneOffset() - J2000.getTimezoneOffset()) / 1440;
+Date.prototype.getJulian = function() {
+	return (this / 86400000) - (this.getTimezoneOffset()/1440) + 2440587.5;
 }
 
 var calculate = (function() {
@@ -27,14 +26,17 @@ var calculate = (function() {
 		return wrap(angle);
 	}
 	
-	return function calculate(object, delta) {
+	return function calculate(object, date) {
 		var period = object.period; // orbital period (d)
 		var anomaly = object.anomaly; // mean anomaly
 		var eccentricity = object.eccentricity; // eccentricity of orbit
-		var semimajor = object.semimajor; // semi-major axis (au)
+		var semimajor = object.semimajor; // semi-major axis
 		var ascending = object.ascending; // longitude of ascending node
 		var argument = object.argument; // argument of periapsis
 		var inclination = object.inclination; // inclination to ecliptic
+		
+		var epoch = object.epoch;
+		var delta = date.getJulian() - epoch.getJulian();
 		
 		var rotation = 2 * Math.PI * delta / period + anomaly;
 		var angle = KeplersEquation(rotation, eccentricity, 12);

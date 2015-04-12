@@ -25,7 +25,7 @@ function drawPlanet(x, y, name, color, scale) {
 }
 
 
-var delta = new Date("April 11 2015 23:00:00 UTC").getEpochDelta();
+var date = new Date("April 11 2015 23:00:00 UTC");
 var scale = 100;
 
 stage.clear();
@@ -35,7 +35,7 @@ drawPlanet(0, 0, "Sun", "White", scale);
 var colors = ['OrangeRed'];
 
 objects.forEach(function(object, index) {
-	var values = calculate(object, delta);
+	var values = calculate(object, date);
 	
 	var name = object.name;
 	var color = colors[index] || "Red";
