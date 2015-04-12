@@ -34,43 +34,47 @@ stage.clear();
 
 drawPlanet(0, 0, "Sun", "White", scale);
 
-var colorCurrent = "Red";
 var colorPredicted = "Gray";
 
 var plots = Math.pow(2, 10);
+
+var colors = {
+	mercury: "Red",
+	venus: "Orange",
+	earth: "Yellow",
+	mars: "Green",
+	ceres: "Blue",
+	jupiter: "Purple",
+	saturn: "Chocolate",
+	uranus: "Chartreuse",
+	neptune: "Crimson",
+	pluto: "Cyan",
+	'halleys-comet': "ForestGreen",
+	makemake: "Gold",
+	eris: "LightBlue",
+	haumea: "Olive",
+};
 
 objects.forEach(function(object, index) {
 	
 	var line = new createjs.Shape();
 	line.graphics.beginStroke(colorPredicted);
-		
-	var last = null;
 	
 	for(var d = 0; d <= plots; d++) {
-		var date = new Date("October 4 2023 12:00:00 UTC");
+		var date = new Date();
 		date.setDate(date.getDate() + d * (object.period / plots));
 		
-		var values = calculate(object, date);
+		var values = calculate(object, date, d === 0);
 		var name = d == 0 ? object.name : '';
-		var color = d == 0 ? colorCurrent: colorPredicted;
+		var color = d == 0 ? colors[object.slug] : colorPredicted;
 		
 		if (d == 0) {
 			drawPlanet(values.cartesian.x, values.cartesian.y, name, color, scale);
-		}
-		
-		if (last != null) {
-			var deltaX = values.cartesian.x - last.cartesian.x;
-			var deltaY = values.cartesian.y - last.cartesian.y;
-			var delta = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-		}
-		
-		if (d == 0) {
+			
 			line.graphics.moveTo(centerX + (values.cartesian.x * scale), centerY - (values.cartesian.y * scale));
 		} else {
 			line.graphics.lineTo(centerX + (values.cartesian.x * scale), centerY - (values.cartesian.y * scale));
 		}
-		
-		last = values;
 	}
 	
 	stage.addChildAt(line, 0);
