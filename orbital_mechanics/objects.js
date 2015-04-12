@@ -122,6 +122,39 @@ var objects = (function() {
 			ascending: 58.42008 * rads,
 			argument: 111.33249 * rads,
 			epoch: new Date('January 1 2000 12:00:00 UTC'),
+		},
+		{
+			name: 'Makemake',
+			semimajor: 6838866660 * 1000,
+			eccentricity: 0.15586,
+			period: 112897,
+			anomaly: 156.353 * rads,
+			inclination: 29.00685 * rads,
+			ascending: 79.3659 * rads,
+			argument: 297.240 * rads,
+			epoch: new Date('December 09 2014 12:00:00 UTC')
+		},
+		{
+			name: 'Eris',
+			semimajor: 1.01398933 * Math.pow(10,13),
+			eccentricity: 0.44068,
+			period: 203830,
+			anomaly: 204.16 * rads,
+			inclination: 44.0445 * rads,
+			ascending: 35.9531 * rads,
+			argument: 150.977 * rads,
+			epoch: new Date('December 09 2014 12:00:00 UTC')
+		},
+		{
+			name: 'Haumea',
+			semimajor: 6.46532078 * Math.pow(10,12),
+			eccentricity: 0.19126,
+			period: 103774,
+			anomaly: 209.07 * rads,
+			inclination: 28.19 * rads,
+			ascending: 121.79 * rads,
+			argument: 240.20 * rads,
+			epoch: new Date('December 09 2014 12:00:00 UTC')
 		}
 	];
 	
