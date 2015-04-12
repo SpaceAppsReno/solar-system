@@ -1,4 +1,4 @@
-# BLSS developed in Appcellerator Titanium
+# BLSS
 
 ## App Features:
 - Map with location of planets
