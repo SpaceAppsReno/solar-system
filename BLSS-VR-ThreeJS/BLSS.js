@@ -2,15 +2,20 @@ var container = document.getElementById("modelWindow");
 var renderer	= new THREE.WebGLRenderer({
     antialias	: true
 });
-renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setSize(window.innerWidth, window.innerHeight );
 container.appendChild( renderer.domElement );
 renderer.shadowMapEnabled	= true;
+var controls;
 
 var updateFcts	= [];
 var scene	= new THREE.Scene();
 var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100 );
 camera.position.z = 1.5;
+controls = new THREE.OrbitControls(camera);
+controls.damping = 0.2;
+controls.addEventListener('change', render)
 
+window.addEventListener('resize',function() {onWindowResize();});
 var ambiLight	= new THREE.AmbientLight( 'white' );
 scene.add( ambiLight );
 
@@ -51,6 +56,11 @@ var earthDefaultRotation = .004;
 var currentRotation = earthDefaultRotation;
 var cloud = null;
 var ring = null;
+var deviceOrientation = true;
+function DeviceOrientationSetting()
+{
+    deviceOrientation = !deviceOrientation;
+}
 function switchValue(type){
     currentMesh && scene.remove(currentMesh);
     scene.remove(ring);
@@ -118,17 +128,7 @@ switchValue(initialType);
 
 //////////////////////////////////////////////////////////////////////////////////
 //		Camera Controls							//
-//////////////////////////////////////////////////////////////////////////////////
-var mouse	= {x : 0, y : 0}
-document.addEventListener('mousemove', function(event){
-    mouse.x	= (event.clientX / window.innerWidth ) - 0.5
-    //mouse.y	= (event.clientY / window.innerHeight) - 0.5
-}, false)
-updateFcts.push(function(delta, now){
-    camera.position.x += (mouse.x*5 - camera.position.x) * (delta*3)
-    //camera.position.y += (mouse.y*5 - camera.position.y) * (delta*3)
-    camera.lookAt( scene.position )
-})
+
 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -150,8 +150,28 @@ requestAnimationFrame(function animate(nowMsec){
     var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
     lastTimeMsec	= nowMsec
     currentMesh.rotation.y += currentRotation;
+    controls.update();
     // call each update function
     updateFcts.forEach(function(updateFn){
         updateFn(deltaMsec/1000, nowMsec/1000)
     })
-})
+});
+
+function render() {
+
+    renderer.render( scene, camera );
+    //stats.update();
+
+}
+
+function onWindowResize() {
+
+    console.log("window resized");
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    render();
+
+}
