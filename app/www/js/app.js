@@ -10,8 +10,11 @@ angular.module('starter', [
     'map.directive',
     'map.controller',
     'details.controller',
+    'settings.controller',
     'CustomFilter',
-    'PlanetService'
+    'PlanetService',
+    'SettingsService',
+    'jp.WebStorage'
 ])
 
 .run(function($ionicPlatform) {
@@ -51,7 +54,8 @@ angular.module('starter', [
         url: "/settings",
         views: {
             'menuContent': {
-                templateUrl: "templates/settings.html"
+                templateUrl: "templates/settings.html",
+                controller: "SettingsCtrl as Settings"
             }
         }
     })
@@ -67,4 +71,14 @@ angular.module('starter', [
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/map');
-});
+})
+
+.controller('AppCtrl', ['$scope', function($scope) {
+        var vm = this;
+
+        vm.centerOnMe = function() {
+            $scope.$broadcast('CenterOnMe');
+        }
+    }
+])
+;

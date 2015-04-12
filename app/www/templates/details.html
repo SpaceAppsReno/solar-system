@@ -1,8 +1,16 @@
 <ion-view view-title="{{Detail.planetName | uppercase}}">
     <ion-content>
-        <h1>{{Detail.planet.name}}</h1>
+        <div style="width: 256px; margin: 0 auto;">
+            <img ng-src="img/planets/{{Detail.planetRepresentation.icon}}" />
+        </div>
+        <h2>Scale Info</h2>
         <dl>
-            <dt>Radius: </dt><dd>{{Detail.planet.physical.radius * 100 | toFixed:3}}cm, {{Detail.planet.physical.radius * 39.3700787 | toFixed:3}}in</dd>
+            <dt>Radius</dt><dd>{{Detail.planet.physical.radius * 100 | toFixed:3}}cm, {{Detail.planet.physical.radius * 39.3700787 | toFixed:3}}in</dd>
+        </dl>
+        <h2>Coordinates</h2>
+        <dl>
+            <dt>Lat</dt><dd>{{Detail.position.planetLatLng.k}}</dd>
+            <dt>Lng</dt><dd>{{Detail.position.planetLatLng.D}}</dd>
         </dl>
     </ion-content>
 </ion-view>
