@@ -38,15 +38,15 @@ module.exports = function calculate(object, date) {
 	var delta = getJulian(date) - getJulian(epoch);
 	
 	var rotation = 2 * Math.PI * delta / period + anomaly;
-	var angle = KeplersEquation(rotation, eccentricity, 12);
-	var radius = semimajor * (1 - eccentricity * eccentricity) / (1 + eccentricity * Math.cos(angle));
+	var azimuth = KeplersEquation(rotation, eccentricity, 12);
+	var radius = semimajor * (1 - eccentricity * eccentricity) / (1 + eccentricity * Math.cos(azimuth));
 	
-	var x = radius * (Math.cos(ascending) * Math.cos(angle + argument) - Math.sin(ascending) * Math.sin(angle + argument) * Math.cos(inclination));
-	var y = radius * (Math.sin(ascending) * Math.cos(angle + argument) + Math.cos(ascending) * Math.sin(angle + argument) * Math.cos(inclination));
-	var z = radius * (                                                                         Math.sin(angle + argument) * Math.sin(inclination));
+	var x = radius * (Math.cos(ascending) * Math.cos(azimuth + argument) - Math.sin(ascending) * Math.sin(azimuth + argument) * Math.cos(inclination));
+	var y = radius * (Math.sin(ascending) * Math.cos(azimuth + argument) + Math.cos(ascending) * Math.sin(azimuth + argument) * Math.cos(inclination));
+	var z = radius * (                                                                           Math.sin(azimuth + argument) * Math.sin(inclination));
 	
 	return {
-		polar: { angle: angle, radius: radius },
+		polar: { radius: radius, azimuth: azimuth, inclination: object.inclination },
 		cartesian: { x: x, y: y, z: z },
 	};
 }
