@@ -1,0 +1,26 @@
+<ion-view view-title="Settings">
+    <ion-content>
+        <form name="settingsForm" novalidate>
+            <div class="list">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Sun Latitude</span>
+                    <input type="text" placeholder="39.545866" required ng-model="Settings.settings.sun.lat">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Sun Longitude</span>
+                    <input type="text" placeholder="-119.819391" required ng-model="Settings.settings.sun.lng">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Sun Radius (meters)</span>
+                    <input type="text" placeholder="9.8" required ng-model="Settings.settings.sun.radius.scale">
+                </label>
+            </div>
+            <button class="button button-full button-positive" ng-click="Settings.saveSettings()">
+                Submit
+            </button>
+            <button class="button button-full button-light" ng-click="Settings.cancel()">
+                Cancel
+            </button>
+        </form>
+    </ion-content>
+</ion-view>
