@@ -320,18 +320,7 @@ module.exports = [
 	},
 ];
 
-function slugify(name) {
-	return name.toLowerCase()
-		.replace(/\s+/g, '-')           // Replace spaces with -
-		.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-		.replace(/\-\-+/g, '-')         // Replace multiple - with single -
-		.replace(/^-+/, '')             // Trim - from start of text
-		.replace(/-+$/, '');            // Trim - from end of text
-}
-
 module.exports.map(function(value) {
-	value.slug = slugify(value.name);
-	
 	value.orbital.semiminor = value.orbital.semimajor * Math.sqrt(1 - Math.pow(value.orbital.eccentricity, 2));
 	
 	var distance = Math.sqrt(Math.pow(value.orbital.semimajor, 2) - Math.pow(value.orbital.semiminor, 2));

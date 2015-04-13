@@ -39,13 +39,22 @@ app.get('/realtime', function *realtime() {
 	this.body = calculate(objects, factor, date);
 });
 
+function slugify(name) {
+	return name.toLowerCase()
+		.replace(/\s+/g, '-')           // Replace spaces with -
+		.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+		.replace(/\-\-+/g, '-')         // Replace multiple - with single -
+		.replace(/^-+/, '')             // Trim - from start of text
+		.replace(/-+$/, '');            // Trim - from end of text
+}
+
 function calculate(objects, factor, date) {
 	return objects.map(function(object) {
 		var mechanics = Mechanics(object.orbital, date);
 		
 		var result = {
 			name: object.name,
-			slug: object.slug,
+			slug: slugify(object.name),
 			date: date.toUTCString(),
 			epoch: object.orbital.epoch.toUTCString(),
 		};
