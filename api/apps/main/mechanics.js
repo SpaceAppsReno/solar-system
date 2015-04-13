@@ -1,7 +1,7 @@
 // ported and modified from http://www.stargazing.net/kepler/ellipse.html
 
 function getJulian(date) {
-	return (date / 86400000) - (date.getTimezoneOffset()/1440) + 2440587.5;
+	return (date / 86400000) - (date.getTimezoneOffset() / 1440) + 2440587.5;
 }
 
 /* Make an angle between 0 and 2 pi */

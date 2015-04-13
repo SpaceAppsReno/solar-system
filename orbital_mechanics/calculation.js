@@ -1,9 +1,9 @@
-Date.prototype.getJulian = function() {
-	return (this / 86400000) - (this.getTimezoneOffset()/1440) + 2440587.5;
-}
-
 var calculate = (function() {
 	// ported and modified from http://www.stargazing.net/kepler/ellipse.html
+	
+	function getJulian(date) {
+		return (date / 86400000) - (date.getTimezoneOffset() / 1440) + 2440587.5;
+	}
 	
 	/* Make an angle between 0 and 2 pi */
 	function wrap(theta) {
@@ -14,7 +14,6 @@ var calculate = (function() {
 	
 	function KeplersEquation(mean, eccentricity, epsilon) {
 		mean = wrap(mean);
-		
 		var delta, e = mean;
 		
 		do {
@@ -37,18 +36,18 @@ var calculate = (function() {
 		var inclination = object.inclination; // inclination to ecliptic
 		
 		var epoch = object.epoch;
-		var delta = date.getJulian() - epoch.getJulian();
+		var delta = getJulian(date) - getJulian(epoch);
 		
 		var rotation = 2 * Math.PI * delta / period + anomaly;
-		var angle = KeplersEquation(rotation, eccentricity, 12);
-		var radius = semimajor * (1 - eccentricity * eccentricity) / (1 + eccentricity * Math.cos(angle));
+		var azimuth = KeplersEquation(rotation, eccentricity, 12);
+		var radius = semimajor * (1 - eccentricity * eccentricity) / (1 + eccentricity * Math.cos(azimuth));
 		
-		var x = radius * (Math.cos(ascending) * Math.cos(angle + argument) - Math.sin(ascending) * Math.sin(angle + argument) * Math.cos(inclination));
-		var y = radius * (Math.sin(ascending) * Math.cos(angle + argument) + Math.cos(ascending) * Math.sin(angle + argument) * Math.cos(inclination));
-		var z = radius * (                                                                         Math.sin(angle + argument) * Math.sin(inclination));
+		var x = radius * (Math.cos(ascending) * Math.cos(azimuth + argument) - Math.sin(ascending) * Math.sin(azimuth + argument) * Math.cos(inclination));
+		var y = radius * (Math.sin(ascending) * Math.cos(azimuth + argument) + Math.cos(ascending) * Math.sin(azimuth + argument) * Math.cos(inclination));
+		var z = radius * (                                                                           Math.sin(azimuth + argument) * Math.sin(inclination));
 		
 		return {
-			polar: { angle: angle, radius: radius },
+			polar: { radius: radius, azimuth: azimuth, inclination: object.inclination },
 			cartesian: { x: x, y: y, z: z },
 		};
 	}
