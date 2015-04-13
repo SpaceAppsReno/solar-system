@@ -56,15 +56,14 @@ var colors = {
 };
 
 objects.forEach(function(object, index) {
-	
 	var line = new createjs.Shape();
 	line.graphics.beginStroke(colorPredicted);
 	
 	for(var d = 0; d <= plots; d++) {
 		var date = new Date();
-		date.setDate(date.getDate() + d * (object.period / plots));
+		date.setDate(date.getDate() + d * (object.orbital.period / plots));
 		
-		var values = calculate(object, date, d === 0);
+		var values = calculate(object.orbital, date, d === 0);
 		var name = d == 0 ? object.name : '';
 		var color = d == 0 ? colors[object.slug] : colorPredicted;
 		
