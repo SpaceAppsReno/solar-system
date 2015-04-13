@@ -120,6 +120,72 @@ module.exports = [
 			flattening: 0.06487,
 			radius: 69911000,
 		},
+		moons:[
+			{
+				name: 'Io',
+				orbital: {
+					semimajor: 421800000,
+					eccentricity: 0.0041,
+					period: 1.761875,
+					anomaly: 0 * rads, /*data not available*/
+					inclination: 0.036 * rads,
+					ascending: 43.977 * rads,
+					argument: 84.129 * rads,
+					epoch: new Date('January 1 2000 12:00:00 UTC'),
+				},
+				physical: {
+					radius: 1821600,
+				}
+			},
+			{
+				name: 'Europa',
+				orbital: {
+					semimajor: 671100000,
+					eccentricity: 0.0094,
+					period: 3.543,
+					anomaly: 0 * rads, /*Data unavailable*/
+					inclination: 0.466 * rads,
+					ascending: 219.106 * rads,
+					argument: 88.97 * rads,
+					epoch: new Date('January 1 2000 12:00:00 UTC'),
+				},
+				physical: {
+					radius: 969.84,
+				}
+			},
+			{
+				name: 'Ganymede',
+				orbital: {
+					semimajor: 1070400000,
+					eccentricity: 0.0013,
+					period: 7.155,
+					anomaly: 0 * rads, /*data not available*/
+					inclination: 0.177 * rads,
+					ascending: 63.552 * rads,
+					argument: 192.417 * rads,
+					epoch: new Date('January 1 2000 12:00:00 UTC'),
+				},
+				physical: {
+					radius: 2631200,
+				}
+			},
+			{
+				name: 'Callisto',
+				orbital: {
+					semimajor: 1882700000,
+					eccentricity: 0.0074,
+					period: 16.69,
+					anomaly: 0 * rads, /*data not available*/
+					inclination: 0.192 * rads,
+					ascending: 298.848 * rads,
+					argument: 52.643 * rads,
+					epoch: new Date('January 1 2000 12:00:00 UTC'),
+				},
+				physical: {
+					radius: 2410300,
+				}
+			},
+		]
 	},
 	{
 		name: 'Saturn',
