@@ -15,6 +15,11 @@ module.exports = function(app) {
 		catch (err) {
 			this.app.emit('error', err, this);
 			
+			if(err.message.indexOf('|') === 3) {
+				err.status = +err.message.substr(0,3);
+				err.message = err.message.substr(4);
+			}
+			
 			err.status = err.status || 500;
 			err.title = statuses[err.status];
 			
