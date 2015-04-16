@@ -45,6 +45,10 @@ angular.module('PlanetService', [])
             "default": {
                 color: "black",
                 icon: "default.png"
+            },
+            "satellite": {
+                color: "gray",
+                icon: "satellite.png"
             }
         };
 
@@ -71,6 +75,7 @@ angular.module('PlanetService', [])
                 });
         } else {
             $rootScope.$broadcast("planetsLoaded", self.data);
+            self.fetchCurrentPositions();
         }
     };
 

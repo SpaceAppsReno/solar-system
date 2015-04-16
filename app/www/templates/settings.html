@@ -3,6 +3,10 @@
         <form name="settingsForm" novalidate>
             <div class="list">
                 <label class="item item-input item-stacked-label">
+                    <span class="input-label">Profile Name</span>
+                    <input type="text" placeholder="Fleischmann Planetarium" required ng-model="Settings.settings.sun.name">
+                </label>
+                <label class="item item-input item-stacked-label">
                     <span class="input-label">Sun Latitude</span>
                     <input type="text" placeholder="39.545866" required ng-model="Settings.settings.sun.lat">
                 </label>

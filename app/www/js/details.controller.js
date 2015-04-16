@@ -16,7 +16,7 @@ angular.module('details.controller', [])
         PlanetService.planets.fetchPlanets();
         $scope.$on('planetsLoaded', function(event, planets) {
             vm.planet = _.find(planets, function(planet) { return planet.slug == vm.planetName; });
-
+console.log("planetsLoaded", planets);
             var distance = Math.sqrt( Math.pow(vm.planet.orbital.center[1], 2) + Math.pow(vm.planet.orbital.center[0], 2) );
             var bearing = Math.atan(vm.planet.orbital.center[0] * -1 / vm.planet.orbital.center[1]) / (Math.PI / 180);
             var modifiedSunLatLng = google.maps.geometry.spherical.computeOffset(sunLatLng, distance, bearing);
@@ -26,8 +26,8 @@ angular.module('details.controller', [])
 
         $scope.$on('positionsLoaded', function(event, positions) {
             vm.position = _.find(positions, function(position) { return position.slug == vm.planetName; });
-
-            var planetBearing = 90 - (vm.position.polar.angle * 180 / Math.PI);
+console.log("positions loaded", positions);
+            var planetBearing = 90 - (vm.position.polar.azimuth * 180 / Math.PI);
             var planetLatLng = google.maps.geometry.spherical.computeOffset(vm.planet.modifiedSunLatLng, vm.position.polar.radius, planetBearing);
 
             vm.position.planetLatLng = planetLatLng;

@@ -5,12 +5,23 @@
         </div>
         <h2>Scale Info</h2>
         <dl>
-            <dt>Radius</dt><dd>{{Detail.planet.physical.radius * 100 | toFixed:3}}cm, {{Detail.planet.physical.radius * 39.3700787 | toFixed:3}}in</dd>
+            <dt>Radius of body</dt><dd>{{Detail.planet.physical.radius * 100 | toFixed:3}}cm, {{Detail.planet.physical.radius * 39.3700787 | toFixed:3}}in</dd>
+            <dt>Distance from sun</dt><dd>{{Detail.position.polar.radius | toFixed:3}}m</dd>
         </dl>
         <h2>Coordinates</h2>
         <dl>
             <dt>Lat</dt><dd>{{Detail.position.planetLatLng.k}}</dd>
             <dt>Lng</dt><dd>{{Detail.position.planetLatLng.D}}</dd>
         </dl>
+        <h2>Satellites</h2>
+        <p ng-if="Detail.planet.moons === undefined">No satellites.</p>
+        <div ng-repeat="moon in Detail.position.moons">
+            <h3>{{moon.name}}</h3>
+            <dl>
+                <dt>Distance from parent</dt><dd>{{moon.polar.radius | toFixed:3}}m</dd>
+            </dl>
+        </div>
+
+
     </ion-content>
 </ion-view>

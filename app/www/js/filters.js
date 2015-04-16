@@ -7,6 +7,6 @@ angular.module('CustomFilter', [])
     .filter('toFixed', function() {
         return function(num, digits) {
             var precision = digits || 0;
-            return num.toFixed(precision);
+            return (typeof num === 'undefined') ? false : num.toFixed(precision);
         };
     });
