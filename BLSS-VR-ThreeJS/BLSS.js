@@ -13,7 +13,8 @@ var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHei
 camera.position.z = 1.5;
 controls = new THREE.OrbitControls(camera);
 controls.damping = 0.2;
-controls.addEventListener('change', render)
+controls.addEventListener('change', render);
+var planetInfoText = document.getElementById("PlanetInfoParagraph");
 
 window.addEventListener('resize',function() {onWindowResize();});
 var ambiLight	= new THREE.AmbientLight( 'white' );
@@ -73,10 +74,8 @@ function PlanetRotationSetting()
 }
 function updateCurrentRotation(type){
     if( type === 'Sun' ){
-
         currentRotation = earthDefaultRotation / 26;
     }else if( type === 'Mercury' ){
-
         currentRotation = earthDefaultRotation / 58.625;
     }else if( type === 'Venus' ){
         currentRotation = (earthDefaultRotation / 116.75) * -1;
@@ -100,6 +99,21 @@ function DeviceOrientationSetting()
 {
     deviceOrientation = !deviceOrientation;
 }
+var planetInfoString = GetPlanetInfoString(location.hash.substr(1)	|| 'Earth');
+function GetPlanetInfoString(planet)
+{
+    var bodyArray = PlanetInfo[planet];
+    planetInfoString = "";
+    var jsonArray = JSON.stringify(bodyArray);
+    JSON.parse(jsonArray,function(k,v){
+        console.log("json parse hit",k,v);
+        if (k != "") {
+            planetInfoString += k + ": " + v + "\r\n";
+        }
+    });
+
+    document.getElementById("PlanetInfoParagraph").innerText = planetInfoString;
+}
 function switchValue(type){
     currentMesh && scene.remove(currentMesh);
     scene.remove(ring);
@@ -108,23 +122,31 @@ function switchValue(type){
     ambiLight.color.setHex(0xffffff);
     if( type === 'Sun' ){
         var mesh	= THREEx.Planets.createSun();
+        GetPlanetInfoString('Sun');
         mesh.name = "Sun";
     }else if( type === 'Mercury' ){
+        GetPlanetInfoString('Mercury');
         var mesh	= THREEx.Planets.createMercury();
         mesh.name = 'Mercury';
     }else if( type === 'Venus' ){
+        GetPlanetInfoString('Venus');
         var mesh	= THREEx.Planets.createVenus();
     }else if( type === 'Moon' ){
+        GetPlanetInfoString('Moon');
         var mesh	= THREEx.Planets.createMoon();
     }else if( type === 'Earth' ){
+        GetPlanetInfoString('Earth');
         var mesh	= THREEx.Planets.createEarth();
         cloud	= THREEx.Planets.createEarthCloud();
         mesh.add(cloud)
     }else if( type === 'Mars' ){
+        GetPlanetInfoString('Mars');
         var mesh	= THREEx.Planets.createMars();
     }else if( type === 'Jupiter' ){
+        GetPlanetInfoString('Jupiter');
         var mesh	= THREEx.Planets.createJupiter();
     }else if( type === 'Saturn' ){
+        GetPlanetInfoString('Saturn');
         var mesh	= THREEx.Planets.createSaturn();
         mesh.receiveShadow	= true;
         mesh.castShadow		= true;
@@ -135,6 +157,7 @@ function switchValue(type){
         ring.castShadow		= true;
         scene.add(ring);
     }else if( type === 'Uranus' ){
+        GetPlanetInfoString('Uranus');
         var mesh	= THREEx.Planets.createUranus();
         mesh.receiveShadow	= true;
         mesh.castShadow		= true;
@@ -145,6 +168,7 @@ function switchValue(type){
         scene.add(ring);
         ambiLight.color.setHex(0x222222);
     }else if( type === 'Neptune' ){
+        GetPlanetInfoString('Neptune');
         var mesh	= THREEx.Planets.createNeptune();
     }else	console.assert(false);
 
